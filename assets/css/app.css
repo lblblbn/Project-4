@@ -1,0 +1,21 @@
+//clearfix
+.clr:after {
+	content: ".";
+	display: block;
+	clear: both;
+	visibility: hidden;
+	line-height: 0;
+	height: 0;
+}
+ 
+.clr {
+	display: inline-block;
+}
+ 
+html[xmlns] .clr {
+	display: block;
+}
+ 
+* html .clr {
+	height: 1%;
+}
