@@ -24,6 +24,7 @@
 			<div id="home">
 				<header class="toolbar">
 					<h1>Bo Ling</h1>
+					<a class="button slideup" href="#add-marker"><i class="icon-map-marker"></i></a>
 				</header>
 				
 				<div class="page">
@@ -31,6 +32,27 @@
 					</div>
 				</div>
 			</div>
+			
+			<div id="add-marker">
+                <header class="toolbar">
+					<h1>Add Marker</h1>
+                    <a class="back" href="#home">Back</a>
+                </header>
+                
+	        	<form action="id" id="new-location" class="scroll">
+                    <ul class="edit rounded">
+                        <li><input type="text" name="name" placeholder="Marker Name" id="name"></li>
+                        <li><input type="text" name="street" placeholder="Street Address" id="street"></li>
+                        <li><input type="text" name="city" placeholder="City" id="city"></li>
+                        <li><input type="text" name="state" placeholder="State" id="state"></li>
+                        <li><input type="text" name="zip" placeholder="Zip Code" id="zip"></li>
+                    </ul>
+                    
+                    <div class="hidden-page">
+						<button class="submit redButton">Add Marker</button>
+                    </div> 
+                </form> 
+            </div>
 		</div>
 		
 		

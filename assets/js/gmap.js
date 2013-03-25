@@ -4,13 +4,13 @@
 		var $mapDiv = $(obj);
 	
 		var t = {
+			mapDiv: $mapDiv,
 			mapOptions: {
-				zoom: 8,
-				center: new google.maps.LatLng(-34.397, 150.644), 
+				center: new google.maps.LatLng(39.76, -86.15), 
 				mapTypeId: google.maps.MapTypeId.ROADMAP, 
-				scrollwheel: true
+				scrollwheel: true,
+				zoom: 8,
 			},
-			mapDiv: $mapDiv
 		}
 		
 		t.init = function(options) {
