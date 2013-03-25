@@ -7,5 +7,6 @@
 		jQT = $.jQTouch({
 				statusBar: 'black'
 		});
+		console.log("hi");
 	});
 }(jQuery, this));
