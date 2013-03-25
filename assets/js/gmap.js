@@ -5,21 +5,20 @@
 	
 		var t = {
 			mapOptions: {
-				zoom: 15,
-				center: new google.maps.LatLng(0, 0), 
+				zoom: 8,
+				center: new google.maps.LatLng(-34.397, 150.644), 
 				mapTypeId: google.maps.MapTypeId.ROADMAP, 
-				scrollwheel: false
+				scrollwheel: true
 			},
 			mapDiv: $mapDiv
 		}
 		
 		t.init = function(options) {
-			t.map = new google.maps.Map(t.mapDiv, t.mapOptions);
+			t.map = new google.maps.Map(t.mapDiv[0], t.mapOptions);
 			return t.map;
 		}
 		
 		t.init();
-		console.log(t);
 		return t;
 	}
 	
