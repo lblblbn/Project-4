@@ -11,12 +11,12 @@
 		});
 		
 		var goHome = function() {
-			$('a[href="#home"]').click();	
+			$("a[href="#home"]").click();	
 		}
 		
-		$('#home').bind('pageAnimationEnd', function(event, info) {
-			if (info.direction == 'in') {
-				$("#map").show();				
+		$("#home").bind('pageAnimationEnd', function(event, info) {
+			if (info.direction == "in") {
+				$("#map").show();
 				google.maps.event.trigger(map.map, 'resize');
 				map.map.fitBounds(map.bounds);
 			}
@@ -48,18 +48,18 @@
 			}
 			
 			map.geocode(address.join(" "), function(response) {
-				console.log(response);
-				
 				if(response.success) {	
 					var lat = response.results[0].geometry.location.lat();
 					var lng = response.results[0].geometry.location.lng();
 					
-					
-					
-					map.addMarker(lat, lng, $name.val());
-					map.saveRow({name: $name.val(), street: $street.val(), city: $city.val(), state: $state.val(), zip: $zip.val(), lat: lat, lng: lng});
-					resetFields();
-					goHome();
+					if(!map.hasLatLng(lat, lng)) {
+						map.addMarker(lat, lng, $name.val());
+						map.saveRow({name: $name.val(), street: $street.val(), city: $city.val(), state: $state.val(), zip: $zip.val(), lat: lat, lng: lng});
+						resetFields();
+						goHome();
+					} else {
+						alert('\"' + $.trim(address.join(" ")) + '\" already has a marker. Enter a different address.' );
+					}
 				} else {
 					alert("Invalid address. Enter a different address.");
 				}

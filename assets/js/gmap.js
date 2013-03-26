@@ -61,6 +61,15 @@
 			return marker;
 		}
 		
+		t.hasLatLng = function(lat, lng) {
+			var result = t.db.query(_TABLE, {"lat":lat, "lng":lng});
+			if (result.length === 0) {
+				return false;
+			} else {
+				return true;
+			}
+		}
+		
 		t.saveRow = function(row) {
 			if(t.db.tableExists(_TABLE)) {
 				t.db.insert(_TABLE, {
