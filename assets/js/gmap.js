@@ -28,7 +28,7 @@
 		t.init = function(options) {		
 			if(options) {
 				t.mapOptions = $.extend(true, t.mapOptions, options);	
-			}		
+			}
 			t.map = new google.maps.Map(t.mapDiv[0], t.mapOptions);
 			
 			if(!t.db.tableExists(_TABLE)) {
@@ -61,6 +61,12 @@
 			return marker;
 		}
 		
+		t.moveMarker = function(marker, lat, lng) {
+			var latlng = new google.maps.LatLng(lat, lng);
+			marker.setPosition(latlng);
+			t.bounds.extend(latlng);
+		}
+		
 		t.hasLatLng = function(lat, lng) {
 			var result = t.db.query(_TABLE, {"lat":lat, "lng":lng});
 			if (result.length === 0) {
@@ -86,6 +92,10 @@
 			} else {
 				console.log("table doesnt exist yet");
 			}
+		}
+		
+		t.deleteMarkers = function() {
+			t.db.dropTable(_TABLE);
 		}
 		
 		t.geocode = function(location, callback) {
