@@ -42,6 +42,8 @@
 			
 			if(t.markers.length>1) {
 				t.map.fitBounds(t.bounds);
+			} else if (t.markers.length==1) {
+				t.map.panTo(t.markers[0].getPosition());
 			}
 			
 			return t.map;
@@ -56,7 +58,29 @@
 				title: name,
 			});
 			
-			t.markers.push(marker);			
+			t.markers.push(marker);
+			var index = t.markers.length;
+			
+			google.maps.event.addListener(marker, 'click', function(){
+				var row = t.db.query(_TABLE, {ID:index});
+				row = row[0];
+				
+				var form    = $('#edit-marker');
+				var $name   = form.find('#name');
+				var $street = form.find('#street');
+				var $city   = form.find('#city');
+				var $state  = form.find('#state');
+				var $zip    = form.find('#zip');
+				
+				$name.val(row.name);
+				$street.val(row.street);
+				$city.val(row.city);
+				$state.val(row.state);	
+				$zip.val(row.zipcode);
+				
+				form.attr("value", index);
+				$("a[href='#edit']").click();
+			});
 			t.bounds.extend(latlng);
 			return marker;
 		}
@@ -88,6 +112,34 @@
 					lng: row.lng,
 					//marker: row.marker,
 				});
+				t.db.commit();
+			} else {
+				console.log("table doesnt exist yet");
+			}
+		}
+		
+		t.updateRow = function(index, row) {
+			if(t.db.tableExists(_TABLE)) {
+				t.db.update(_TABLE, {ID: index}, function(r) {
+					r.name = row.name;
+					r.street = row.street;
+					r.city = row.city;
+					r.state = row.state;
+					r.zip = row.zip;
+					r.lat = row.lat;
+					r.lng = row.lng;
+					console.log(r);
+					return r;
+				});
+				t.db.commit();
+			} else {
+				console.log("table doesnt exist yet");
+			}
+		}
+		
+		t.deleteRow = function(index) {
+			if(t.db.tableExists(_TABLE)) {
+				t.db.deleteRows(_TABLE, {ID: index});
 				t.db.commit();
 			} else {
 				console.log("table doesnt exist yet");

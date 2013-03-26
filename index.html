@@ -25,11 +25,15 @@
 				<header class="toolbar">
 					<h1>Bo Ling</h1>
 					<a class="button slideup" href="#add-marker"><i class="icon-map-marker"></i></a>
+					<a class="slideup" href="#edit"></a>
 				</header>
 				
 				<ul class="rounded">
 					<li><div id="map" class="map"></div></li>
-					<li><button id="delete-everything" class="redButton">Delete All Markers</button></li>
+					<li>
+						<!--button class="blueButton"><a class="slideup" href="#add-marker">Add a Marker</a></button-->
+						<button id="delete-everything" class="redButton">Delete All Markers</button>
+					</li>
 				</ul>
 			</div>
 			
@@ -70,8 +74,8 @@
 					</ul>
 					
 					<div class="hidden-page">
-						<button class="submit redButton">Edit Marker</button>
-						<button class="redButton">Delete Marker</button>
+						<button class="submit blueButton">Update Marker</button>
+						<div class="redButton" id="delete-marker">Delete Marker</div>
 					</div>
 				</form>
 			</div>

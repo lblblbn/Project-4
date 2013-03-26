@@ -2,13 +2,15 @@
 	
 	var jQT, map;
 	
+	jQT = $.jQTouch({
+				statusBar: 'black'
+	});
+		
 	$(document).ready(function() {
+		
+		
 		map = $("#map").gmap();
 		map.init();
-		
-		jQT = $.jQTouch({
-				statusBar: 'black'
-		});
 		
 		var goHome = function() {
 			$("a[href='#home']").click();
@@ -53,7 +55,7 @@
 					var lng = response.results[0].geometry.location.lng();
 					
 					if(!map.hasLatLng(lat, lng)) {
-						map.addMarker(lat, lng, $name.val());
+						var marker = map.addMarker(lat, lng, $name.val());
 						map.saveRow({name: $name.val(), street: $street.val(), city: $city.val(), state: $state.val(), zip: $zip.val(), lat: lat, lng: lng});
 						resetFields();
 						goHome();
@@ -75,6 +77,7 @@
 			var $city   = $t.find("#city");
 			var $state  = $t.find("#state");
 			var $zip    = $t.find("#zip");
+			var index = $t.attr("value");			
 			
 			var address = [
 				$street.val(),
@@ -97,10 +100,11 @@
 					var lng = response.results[0].geometry.location.lng();
 					
 					if(!map.hasLatLng(lat, lng)) {
-						map.moveMarker(lat, lng);
-						//map.saveRow({name: $name.val(), street: $street.val(), city: $city.val(), state: $state.val(), zip: $zip.val(), lat: lat, lng: lng});
+						map.moveMarker(map.markers[index-1], lat, lng);
+						map.updateRow(index, {name: $name.val(), street: $street.val(), city: $city.val(), state: $state.val(), zip: $zip.val(), lat: lat, lng: lng});
 						resetFields();
 						goHome();
+					} else if(false){
 					} else {
 						alert('\"' + $.trim(address.join(" ")) + '\" already has a marker. Enter a different address.' );
 					}
@@ -117,5 +121,15 @@
 			map.init();
 		});
 		
+		$("#delete-marker").bind("click", function(e){			
+			var index = $("#edit-marker").attr("value");
+			alert(index);
+			/*map.deleteRow(index);
+			map.init();
+			goHome();*/
+		});
+		
+		console.log(map.markers);
+		console.log(map.db.query("markerTable"));
 	});
 }(jQuery, this));
