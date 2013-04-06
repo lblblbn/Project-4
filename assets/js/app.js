@@ -108,9 +108,12 @@
 						map.updateRow(index, {name: $name.val(), street: $street.val(), city: $city.val(), state: $state.val(), zip: $zip.val(), lat: lat, lng: lng});
 						resetFields();
 						goHome();
-					} else if($name.val() != row.name || $street.val() != row.street || $city.val() != row.city || $state.val() != row.state || $zip.val() != row.zip){
+					} else if($name.val() != row.name){
 						map.updateRow(index, {name: $name.val(), street: $street.val(), city: $city.val(), state: $state.val(), zip: $zip.val(), lat: lat, lng: lng});
 						map.markers[index-1][0].setTitle($name.val());
+						resetFields();
+						goHome();
+					} else if($street.val() === row.street || $city.val() === row.city || $state.val() === row.state || $zip.val() === row.zip) {
 						resetFields();
 						goHome();
 					} else {
