@@ -33,6 +33,7 @@
 			var $city   = $t.find("#city");
 			var $state  = $t.find("#state");
 			var $zip    = $t.find("#zip");
+			var index = map.markers.length +1;
 			
 			var address = [
 				$street.val(),
@@ -55,8 +56,8 @@
 					var lng = response.results[0].geometry.location.lng();
 					
 					if(!map.hasLatLng(lat, lng)) {
-						var marker = map.addMarker(lat, lng, $name.val());
-						map.saveRow({name: $name.val(), street: $street.val(), city: $city.val(), state: $state.val(), zip: $zip.val(), lat: lat, lng: lng});
+						var marker = map.addMarker(lat, lng, $name.val() /*callback*/);
+						map.saveRow({name: $name.val(), street: $street.val(), city: $city.val(), state: $state.val(), zip: $zip.val(), lat: lat, lng: lng, index: index});
 						resetFields();
 						goHome();
 					} else {
@@ -78,6 +79,9 @@
 			var $state  = $t.find("#state");
 			var $zip    = $t.find("#zip");
 			var index = $t.attr("value");			
+			var row = map.getRow(index);
+			
+			console.log(index);
 			
 			var address = [
 				$street.val(),
@@ -100,11 +104,15 @@
 					var lng = response.results[0].geometry.location.lng();
 					
 					if(!map.hasLatLng(lat, lng)) {
-						map.moveMarker(map.markers[index-1], lat, lng);
+						map.moveMarker(map.markers[index-1][0], lat, lng);
 						map.updateRow(index, {name: $name.val(), street: $street.val(), city: $city.val(), state: $state.val(), zip: $zip.val(), lat: lat, lng: lng});
 						resetFields();
 						goHome();
-					} else if(false){
+					} else if($name.val() != row.name || $street.val() != row.street || $city.val() != row.city || $state.val() != row.state || $zip.val() != row.zip){
+						map.updateRow(index, {name: $name.val(), street: $street.val(), city: $city.val(), state: $state.val(), zip: $zip.val(), lat: lat, lng: lng});
+						map.markers[index-1][0].setTitle($name.val());
+						resetFields();
+						goHome();
 					} else {
 						alert('\"' + $.trim(address.join(" ")) + '\" already has a marker. Enter a different address.' );
 					}
